@@ -1,0 +1,42 @@
+name: build binary file
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - run: npm install
+        working-directory: ./websockify
+      - run: npm install -g pkg
+        working-directory: ./websockify
+      - run: pkg -t node14-linux-arm64 package.json
+        working-directory: ./websockify
+
+      # - run: node common/scripts/install-run-rush.js test
+
+      # - run: bash <(curl -s https://codecov.io/bash) -f libraries/struct/coverage/lcov.info -F struct
+
+      - run: touch apps/demo/out/.nojekyll
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: websockify
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
