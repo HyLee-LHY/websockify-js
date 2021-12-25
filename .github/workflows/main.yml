@@ -28,11 +28,6 @@ jobs:
       - run: pkg -t node14-linux-arm64 package.json
         working-directory: ./websockify
 
-      # - run: node common/scripts/install-run-rush.js test
-
-      # - run: bash <(curl -s https://codecov.io/bash) -f libraries/struct/coverage/lcov.info -F struct
-
-      - run: touch apps/demo/out/.nojekyll
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
