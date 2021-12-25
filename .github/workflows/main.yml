@@ -26,12 +26,12 @@ jobs:
         working-directory: ./websockify
       - run: npm install -g pkg
         working-directory: ./websockify
-      - run: pkg -t node14-linux-arm64 websockify/package.json
+      - run: pkg -t node14-linux-armv7 websockify/package.json -o websockify/websockify-armv7
 
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: build
-          FOLDER: websockify
+          FOLDER: websockify/websockify-armv7
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
