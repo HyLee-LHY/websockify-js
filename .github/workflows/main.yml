@@ -22,17 +22,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - run: ls -alh
-#       - run: npm install
-#         working-directory: ./websockify
-#       - run: npm install -g pkg
-#         working-directory: ./websockify
-#       - run: pkg -t node14-linux-arm64 package.json
-#         working-directory: ./websockify
+      - run: npm install
+        working-directory: ./websockify
+      - run: npm install -g pkg
+        working-directory: ./websockify
+      - run: pkg -t node14-linux-arm64 websockify/package.json
 
-#       - name: Deploy
-#         uses: s0/git-publish-subdir-action@develop
-#         env:
-#           REPO: self
-#           BRANCH: build
-#           FOLDER: websockify
-#           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: build
+          FOLDER: websockify
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
